@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->decimal('amount', 8, 4)->nullable();
+            $table->foreignId('asset_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -18,13 +18,9 @@ return new class extends Migration
 
         Schema::create('transaction_types', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('transaction_type_id')->constrained('transaction_types')->cascadeOnDelete();
             $table->string('name')->unique();
             $table->timestamps();
-        });
-
-        Schema::table('transactions', function (Blueprint $table) {
-            $table->decimal('amount', 8, 4)->after('id');
-            $table->foreignId('transaction_type_id')->constrained('transaction_types')->cascadeOnDelete();
         });
     }
 
@@ -36,12 +32,6 @@ return new class extends Migration
 
         Schema::table('portfolios', function (Blueprint $table) {
             $table->dropSoftDeletes();
-        });
-
-        Schema::table('transactions', function (Blueprint $table) {
-            $table->dropForeign(['transaction_type_id']);
-            $table->dropColumn('transaction_type_id');
-            $table->dropColumn('amount');
         });
 
         Schema::dropIfExists('transaction_types');

@@ -24,7 +24,7 @@ class AssetController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AssetRequest $request,  $portfolioId)
+    public function store(AssetRequest $request, $portfolioId, $assetId)
     {
         if ($portfolioId !== $request->get('portfolio_id')) {
             return response()->json(
@@ -46,9 +46,9 @@ class AssetController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $portfolioId, $assetId)
     {
-        $asset = $this->assetService->getById($id);
+        $asset = $this->assetService->getById($assetId);
 
         if (!$asset) {
             return response()->json()
@@ -59,7 +59,7 @@ class AssetController extends Controller
             'id' =>  $asset['id'],
             'portfolio_id' => $asset['portfolio_id'],
             'name' =>  $asset['name'],
-            'asset_type' =>  $asset['asset_type'],
+            'asset_type_id' =>  $asset['asset_type_id'],
         ];
     }
 

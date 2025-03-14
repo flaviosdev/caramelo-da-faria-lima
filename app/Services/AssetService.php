@@ -29,6 +29,7 @@ class AssetService
         return [
             'id' => $asset->id,
             'portfolio_id' => $asset->portfolio_id,
+            'asset_type_id' => $asset->asset_type_id,
             'name' => $asset->name
         ];
     }
@@ -39,6 +40,8 @@ class AssetService
         return $collection->map(function ($item) {
             return [
                 'id' => $item->id,
+                'portfolio_id' => $item->portfolio_id,
+                'asset_type_id' => $item->asset_type_id,
                 'name' => $item->name
             ];
         });

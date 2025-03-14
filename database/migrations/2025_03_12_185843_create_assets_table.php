@@ -29,6 +29,7 @@ return new class extends Migration
     {
         Schema::table('assets', function (Blueprint $table) {
             $table->dropForeign('assets_portfolio_id_foreign');
+            $table->dropSoftDeletes();
         });
         Schema::dropIfExists('assets');
     }
