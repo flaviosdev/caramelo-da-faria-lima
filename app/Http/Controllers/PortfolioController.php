@@ -26,10 +26,10 @@ class PortfolioController extends Controller
     {
         $request['user_id'] = Auth::id();
 
-        $savedPortfolio = $this->portfolioService->save($request);
+        $savedPortfolio = $this->portfolioService->save($request->all());
 
         return [
-            'portfolio_id' =>  $savedPortfolio->id,
+            'id' =>  $savedPortfolio['id'],
         ];
     }
 
@@ -46,8 +46,8 @@ class PortfolioController extends Controller
         }
 
         return [
-            'id' =>  $portfolio->id,
-            'name' =>  $portfolio->name,
+            'id' =>  $portfolio['id'],
+            'name' =>  $portfolio['name'],
         ];
     }
 

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('asset_type_id')->constrained()->cascadeOnDelete();
             $table->foreignId('portfolio_id')->constrained();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

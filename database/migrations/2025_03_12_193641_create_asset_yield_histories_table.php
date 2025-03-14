@@ -14,11 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('asset_yield_history', function (Blueprint $table) {
-            $table->id();  // Coluna 'id' como chave primária
-            $table->foreignId('asset_id')->constrained('assets')->onDelete('cascade');  // Chave estrangeira para 'assets'
-            $table->foreignId('yield_percentage_id')->constrained('yield_percentage')->onDelete('cascade');  // Chave estrangeira para 'yield_percentage'
-            $table->date('yield_date');  // Data do rendimento
-            $table->timestamps();  // 'created_at' e 'updated_at'
+            $table->id();
+            $table->foreignId('asset_id')->constrained('assets')->onDelete('cascade');
+            $table->foreignId('yield_percentage_id')->constrained('yield_percentage')->onDelete('cascade');
+            $table->date('yield_date');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

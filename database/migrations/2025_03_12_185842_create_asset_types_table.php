@@ -17,6 +17,7 @@ return new class extends Migration
             $table->boolean('indexed')->default(false);
             $table->text('description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

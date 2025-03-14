@@ -13,6 +13,7 @@ return new class extends Migration
             $table->foreignId('asset_id')->constrained()->cascadeOnDelete();
             $table->decimal('percentage', 8, 4);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

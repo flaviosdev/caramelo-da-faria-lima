@@ -20,6 +20,10 @@ class PortfolioService
     {
         $portfolio = Portfolio::find($id);
 
+        if (!$portfolio) {
+            return false;
+        }
+
         return [
             'id' => $portfolio->id,
             'name' => $portfolio->name
@@ -41,16 +45,12 @@ class PortfolioService
     {
         $storedPortfolio = Portfolio::find($id);
         $storedPortfolio->name = $portfolio['name'];
-        $updatedPortfolio = $storedPortfolio->save();
-
-        return [
-            'id' => $updatedPortfolio->id,
-            'name' => $updatedPortfolio->name
-        ];
+        return (bool) $storedPortfolio->save();
     }
 
     public function delete(string $id)
     {
-        return Portfolio::destroy($id);
+        return Portfolio::find($id)->delete();
+
     }
 }
