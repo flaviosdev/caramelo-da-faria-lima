@@ -47,7 +47,7 @@ class TransactionService
                 'asset_id' => $item->asset_id,
                 'transaction_type_id' => $item->transaction_type_id,
                 'date' => $item->created_at,
-                'amount' => $item->name,
+                'amount' => (float)$item->amount,
             ];
         });
     }
@@ -57,7 +57,7 @@ class TransactionService
         // TODO: SHOULD I USE OR SHOULD I DELETE????? :-(
         $storedTransaction = Transaction::find($id);
         $storedTransaction->amount = $transaction['amount'];
-        return (bool) $storedTransaction->save();
+        return (bool)$storedTransaction->save();
     }
 
     public function delete(string $id)
