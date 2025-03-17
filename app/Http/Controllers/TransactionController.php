@@ -27,7 +27,7 @@ class TransactionController extends Controller
      */
     public function store(TransactionRequest $request, $portfolioId, $assetId)
     {
-        if ($portfolioId !== $request->get('portfolio_id')) {
+        if ($assetId !== $request->get('asset_id')) {
             return response()->json(
                 ['portfolio_id from url and body does not match'],
                 400
@@ -38,6 +38,7 @@ class TransactionController extends Controller
 
         return [
             'id' => $savedTransaction['id'],
+            'asset_id' => $savedTransaction['asset_id'],
             'transaction_type_id' => $savedTransaction['transaction_type_id'],
             'date' => $savedTransaction['date'],
             'amount' => $savedTransaction['amount'],
@@ -52,15 +53,16 @@ class TransactionController extends Controller
         $transaction = $this->transactionService->getById($transactionId);
 
         if (!$transaction) {
-            return response()->json()
+            return response()->json('Not Found')
                 ->setStatusCode(404);
         }
 
         return [
             'id' => $transaction['id'],
-            'portfolio_id' => $transaction['portfolio_id'],
-            'name' => $transaction['name'],
-            'transaction_type' => $transaction['transaction_type'],
+            'asset_id' => $transaction['asset_id'],
+            'transaction_type_id' => $transaction['transaction_type_id'],
+            'date' => $transaction['date'],
+            'amount' => $transaction['amount'],
         ];
     }
 

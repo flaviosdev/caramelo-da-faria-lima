@@ -27,10 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('assets', function (Blueprint $table) {
-            $table->dropForeign('assets_portfolio_id_foreign');
-            $table->dropSoftDeletes();
-        });
         Schema::dropIfExists('assets');
     }
 };

@@ -12,6 +12,7 @@ class TransactionService
 
         return [
             'id' => $savedTransaction->id,
+            'asset_id' => $savedTransaction->asset_id,
             'transaction_type_id' => $savedTransaction->transaction_type_id,
             'date' => $savedTransaction->created_at,
             'amount' => $savedTransaction->amount
@@ -28,6 +29,7 @@ class TransactionService
 
         return [
             'id' => $transaction->id,
+            'asset_id' => $transaction->asset_id,
             'transaction_type_id' => $transaction->transaction_type_id,
             'date' => $transaction->created_at,
             'amount' => $transaction->amount
@@ -36,10 +38,13 @@ class TransactionService
 
     public function getByAssetId(int $assetId)
     {
-        $collection = Transaction::where('asset_id', $assetId)->get();
+        $collection = Transaction::where('asset_id', $assetId)
+            ->orderBy('created_at', 'desc')
+            ->get();
         return $collection->map(function ($item) {
             return [
                 'id' => $item->id,
+                'asset_id' => $item->asset_id,
                 'transaction_type_id' => $item->transaction_type_id,
                 'date' => $item->created_at,
                 'amount' => $item->name,

@@ -23,7 +23,7 @@ class TransactionRequest extends FormRequest
     {
         return [
             'amount' => 'required',
-            'portfolio_id' => 'required',
+            'asset_id' => 'required',
             'transaction_type_id' => 'required',
         ];
     }

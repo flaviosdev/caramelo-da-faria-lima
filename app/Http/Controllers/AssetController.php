@@ -24,7 +24,7 @@ class AssetController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AssetRequest $request, $portfolioId, $assetId)
+    public function store(AssetRequest $request, $portfolioId)
     {
         if ($portfolioId !== $request->get('portfolio_id')) {
             return response()->json(

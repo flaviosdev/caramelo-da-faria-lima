@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->decimal('amount', 8, 4)->nullable();
             $table->foreignId('asset_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('transaction_type_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

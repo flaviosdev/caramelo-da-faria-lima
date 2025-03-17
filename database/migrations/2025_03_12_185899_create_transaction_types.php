@@ -8,14 +8,6 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('assets', function (Blueprint $table) {
-            $table->softDeletes();
-        });
-
-        Schema::table('portfolios', function (Blueprint $table) {
-            $table->softDeletes();
-        });
-
         Schema::create('transaction_types', function (Blueprint $table) {
             $table->id();
             $table->foreignId('transaction_type_id')->constrained('transaction_types')->cascadeOnDelete();
@@ -26,14 +18,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('assets', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
-
-        Schema::table('portfolios', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
-
         Schema::dropIfExists('transaction_types');
     }
 };
