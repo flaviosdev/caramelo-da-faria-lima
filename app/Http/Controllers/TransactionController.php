@@ -42,6 +42,7 @@ class TransactionController extends Controller
             'transaction_type_id' => $savedTransaction['transaction_type_id'],
             'date' => $savedTransaction['date'],
             'amount' => $savedTransaction['amount'],
+            'balance' => $savedTransaction['balance'],
         ];
     }
 

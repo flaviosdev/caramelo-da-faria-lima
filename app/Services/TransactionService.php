@@ -3,11 +3,17 @@
 namespace App\Services;
 
 use App\Models\Transaction;
+use Illuminate\Support\Facades\DB;
 
 class TransactionService
 {
     public function save($transaction)
     {
+        $transaction['balance'] = 0;
+        if ($lastTransaction = DB::table('transactions')->latest()->first()) {
+            $transaction['balance'] = $transaction['amount'] + $lastTransaction->balance;
+        }
+
         $savedTransaction = Transaction::create($transaction);
 
         return [
@@ -15,7 +21,8 @@ class TransactionService
             'asset_id' => $savedTransaction->asset_id,
             'transaction_type_id' => $savedTransaction->transaction_type_id,
             'date' => $savedTransaction->created_at,
-            'amount' => $savedTransaction->amount
+            'amount' => (float)$savedTransaction->amount,
+            'balance' => (float)$savedTransaction->balance,
         ];
     }
 
@@ -32,7 +39,8 @@ class TransactionService
             'asset_id' => $transaction->asset_id,
             'transaction_type_id' => $transaction->transaction_type_id,
             'date' => $transaction->created_at,
-            'amount' => $transaction->amount
+            'amount' => (float)$transaction->amount,
+            'balance' => (float)$transaction->balance,
         ];
     }
 
@@ -48,6 +56,7 @@ class TransactionService
                 'transaction_type_id' => $item->transaction_type_id,
                 'date' => $item->created_at,
                 'amount' => (float)$item->amount,
+                'balance' => (float)$item->balance, // todo: show in all transactions????
             ];
         });
     }
