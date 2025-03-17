@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->boolean('indexed')->default(false);
+            $table->foreignId('yield_index_id')->constrained('yield_index');
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

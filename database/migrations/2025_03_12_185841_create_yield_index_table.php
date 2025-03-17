@@ -6,19 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('yield_percentage', function (Blueprint $table) {
+        Schema::create('yield_index', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('asset_type_id')->constrained()->cascadeOnDelete();
-            $table->decimal('percentage', 8, 4);
+            $table->string('name');
+            $table->decimal('value', 8, 4);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('yield_percentage');
+        Schema::dropIfExists('yield_index');
     }
 };
