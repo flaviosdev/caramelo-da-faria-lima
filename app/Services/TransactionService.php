@@ -9,9 +9,10 @@ class TransactionService
 {
     public function save($transaction)
     {
-        $transaction['balance'] = 0;
-        if ($lastTransaction = DB::table('transactions')->latest()->first()) {
-            $transaction['balance'] = $transaction['amount'] + $lastTransaction->balance;
+        $transaction['balance'] = $transaction['amount'];
+        if ($lastTransaction = DB::table('transactions')->where('asset_id', $transaction['asset_id'])
+            ->latest()->first()) {
+            $transaction['balance'] += $lastTransaction->balance;
         }
 
         $savedTransaction = Transaction::create($transaction);
