@@ -10,7 +10,6 @@ return new class extends Migration
     {
         Schema::create('transaction_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaction_type_id')->constrained('transaction_types')->cascadeOnDelete();
             $table->string('name')->unique();
             $table->timestamps();
         });

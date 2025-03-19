@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class AssetType extends Model
 {
-    protected $fillable = ['yield_index_id', 'name'];
+    protected $fillable = ['yield_index_id', 'name', 'description', 'indexed'];
     public function asset(): HasMany
     {
         return $this->hasMany(Asset::class);
