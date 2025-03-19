@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class YieldPercentage extends Model
+class YieldIndex extends Model
 {
-    protected $fillable = ['asset_id', 'percentage'];
+    protected $table = 'yield_index';
 
-    protected $table = 'yield_percentage';
+    protected $fillable = ['name', 'formula', 'value'];
     public function asset(): BelongsTo
     {
-        return $this->belongsTo(Asset::class);
+        return $this->belongsTo(AssetType::class);
     }
 }

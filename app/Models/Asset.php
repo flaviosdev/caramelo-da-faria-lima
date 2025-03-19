@@ -21,13 +21,22 @@ class Asset extends Model
         return $this->belongsTo(Portfolio::class);
     }
 
-    public function assetType(): HasOne
+    public function assetType(): BelongsTo
     {
-        return $this->hasOne(AssetType::class);
+        return $this->belongsTo(AssetType::class);
+    }
+    public function yieldIndex(): HasOne
+    {
+        return $this->hasOne(YieldIndex::class);
     }
 
     public function yieldPercentages(): HasMany
     {
         return $this->hasMany(YieldPercentage::class);
+    }
+
+    public function yieldPercentageModifier(): HasOne
+    {
+        return $this->hasOne(YieldPercentageModifier::class);
     }
 }

@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('yield_percentage', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('asset_type_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('asset_id')->constrained()->cascadeOnDelete();
             $table->decimal('percentage', 8, 4);
             $table->timestamps();
             $table->softDeletes();

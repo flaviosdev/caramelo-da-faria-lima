@@ -3,12 +3,32 @@
 namespace App\Services;
 
 use App\Models\Asset;
+use App\Models\AssetType;
+use App\Models\YieldPercentage;
+use App\Models\YieldPercentageModifier;
+use Illuminate\Support\Facades\DB;
 
 class AssetService
 {
     public function save($asset)
     {
+        DB::beginTransaction();
+
         $savedAsset = Asset::create($asset);
+
+        if ($savedAsset->assetType->indexed) {
+            $modifier = YieldPercentageModifier::create([
+                'asset_id' => $savedAsset->id,
+                'value' => $asset['modifier']
+            ]);
+        } else {
+            $percentage = YieldPercentage::create([
+                'asset_id' => $savedAsset->id,
+                'value' => $asset['percentage'] // TODO: IMPLEMENT THIS FIELD!
+            ]);
+        }
+
+        DB::commit();
 
         return [
             'id' => $savedAsset->id,

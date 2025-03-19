@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class AssetType extends Model
 {
-    public function asset(): BelongsTo
+    protected $fillable = ['yield_index_id', 'name'];
+    public function asset(): HasMany
     {
-        return $this->belongsTo(Asset::class);
+        return $this->hasMany(Asset::class);
     }
 }

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('yield_index', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('formula');
             $table->decimal('value', 8, 4);
             $table->timestamps();
         });

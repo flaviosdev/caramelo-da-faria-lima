@@ -25,6 +25,8 @@ class AssetRequest extends FormRequest
             'name' => 'required',
             'portfolio_id' => 'required|exists:portfolios,id',
             'asset_type_id' => 'required|exists:asset_types,id',
+            'indexed' => 'required|boolean',
+            'yield_index' => 'required|exists:yield_index,id',
         ];
     }
 }
