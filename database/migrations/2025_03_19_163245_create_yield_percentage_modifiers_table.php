@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('yield_percentage_modifiers', function (Blueprint $table) {
             $table->foreignId('asset_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('yield_index_id')->constrained('yield_index')->cascadeOnDelete();
             $table->decimal('value', 8, 4)->nullable(false);
             $table->timestamps();
         });

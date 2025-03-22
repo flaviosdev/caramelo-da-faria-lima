@@ -22,9 +22,9 @@ class TransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => 'required',
-            'asset_id' => 'required',
-            'transaction_type_id' => 'required',
+            'amount' => 'required|decimal:0,6',
+            'asset_id' => 'required|integer|exists:assets,id',
+            'transaction_type_id' =>  'required|integer|exists:transaction_types,id',
         ];
     }
 }

@@ -19,6 +19,7 @@ class AssetService
         if ($savedAsset->assetType->indexed) {
             $modifier = YieldPercentageModifier::create([
                 'asset_id' => $savedAsset->id,
+                'yield_index_id' => $asset['yield_index'],
                 'value' => $asset['modifier']
             ]);
         } else {

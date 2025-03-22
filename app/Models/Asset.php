@@ -25,14 +25,15 @@ class Asset extends Model
     {
         return $this->belongsTo(AssetType::class);
     }
-    public function yieldIndex(): HasOne
+
+    public function yieldIndex(): BelongsTo
     {
-        return $this->hasOne(YieldIndex::class);
+        return $this->belongsTo(YieldIndex::class);
     }
 
-    public function yieldPercentages(): HasMany
+    public function yieldPercentage(): HasOne
     {
-        return $this->hasMany(YieldPercentage::class);
+        return $this->hasOne(YieldPercentage::class);
     }
 
     public function yieldPercentageModifier(): HasOne
