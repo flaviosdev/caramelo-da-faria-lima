@@ -6,10 +6,15 @@ use App\Models\Asset;
 use App\Models\AssetType;
 use App\Models\YieldPercentage;
 use App\Models\YieldPercentageModifier;
+use App\Repositories\AssetRepository;
 use Illuminate\Support\Facades\DB;
 
 class AssetService
 {
+    public function __construct(
+        private readonly AssetRepository $assetRepository
+    ) {}
+
     public function save($asset)
     {
         DB::beginTransaction();
@@ -25,7 +30,7 @@ class AssetService
         } else {
             $percentage = YieldPercentage::create([
                 'asset_id' => $savedAsset->id,
-                'value' => $asset['percentage'] // TODO: IMPLEMENT THIS FIELD!
+                'percentage' => $asset['percentage'] // TODO: IMPLEMENT THIS FIELD!
             ]);
         }
 

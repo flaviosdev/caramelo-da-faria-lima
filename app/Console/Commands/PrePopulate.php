@@ -47,6 +47,12 @@ class PrePopulate extends Command
         ]);
 
         AssetType::firstOrCreate([
+            'name' => 'Renda Fixa Prefixada',
+            'indexed' =>  0,
+            'description' => 'Renda Fixa Prefixada',
+        ]);
+
+        AssetType::firstOrCreate([
             'yield_index_id' => $ipca->id,
             'name' => 'Renda Fixa Atrelada ao IPCA',
             'indexed' =>  1,

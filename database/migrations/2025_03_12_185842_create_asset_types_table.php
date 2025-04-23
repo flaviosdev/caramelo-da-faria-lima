@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('asset_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('yield_index_id')->constrained('yield_index')->cascadeOnDelete();
+            $table->foreignId('yield_index_id')->nullable()->constrained('yield_index')->cascadeOnDelete();
             $table->string('name');
             $table->boolean('indexed')->default(false);
             $table->text('description')->nullable();

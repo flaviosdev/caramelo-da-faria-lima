@@ -27,7 +27,9 @@ class CalculateYields extends Command
 
     public function __construct(
         private readonly YieldService $yieldService
-    ) {}
+    ) {
+        parent::__construct();
+    }
 
     /**
      * Execute the console command.

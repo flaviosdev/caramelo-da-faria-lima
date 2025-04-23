@@ -24,10 +24,11 @@ class AssetRequest extends FormRequest
         return [
             'name' => 'required',
             'portfolio_id' => 'required|exists:portfolios,id',
-            'asset_type_id' => 'required|exists:asset_types,id',
+            'asset_type_id' => 'required_if_accepted:indexed',
             'indexed' => 'required|boolean',
             'yield_index' => 'required_if_accepted:indexed|exists:yield_index,id',
             'modifier' => 'required_if_accepted:indexed|decimal:0,6',
+            'percentage' => 'required_if_declined:indexed|decimal:0,6',
         ];
     }
 }
