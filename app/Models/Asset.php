@@ -16,6 +16,20 @@ class Asset extends Model
         return $this->hasMany(Transaction::class);
     }
 
+    public function latestTransaction(): HasOne
+    {
+        return $this->hasOne(Transaction::class)->latestOfMany();
+    }
+
+    public function latestYieldTransaction(): HasOne
+    {
+        return $this->hasOne(Transaction::class)->ofMany([
+            'created_at' => 'max'
+        ],  function ($query) {
+            $query->where('transaction_type_id', TransactionType::YIELD);
+        });
+    }
+
     public function portfolio(): BelongsTo
     {
         return $this->belongsTo(Portfolio::class);

@@ -8,14 +8,16 @@ use App\Models\YieldPercentage;
 use App\Models\YieldPercentageModifier;
 use App\Repositories\AssetRepository;
 use App\Repositories\TransactionRepository;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AssetService
 {
 
     public function __construct(
-        private readonly AssetRepository    $assetRepository,
-        private readonly TransactionService $transactionService,
+        private readonly AssetRepository       $assetRepository,
+        private readonly TransactionService    $transactionService,
         private readonly TransactionRepository $transactionRepository
     ) {}
 
@@ -91,26 +93,29 @@ class AssetService
             ->delete();
     }
 
-    public function getLastTransactionFor(Asset $asset)
-    {
-        return DB::table('transactions')
-            ->where([
-                ['asset_id', $asset->id],
-            ])
-            ->latest()
-            ->first();
-    }
-
     public function shouldReceiveYield(Asset $asset)
     {
-        $hasYieldToday = $this->transactionRepository->hasYieldToday($asset);
+        $alreadyHasYieldToday = $this->transactionRepository->hasYieldToday($asset);
+        if ($alreadyHasYieldToday) {
+            return false;
+        }
 
-        return !$hasYieldToday;
+        $lastTransactionYesterday = $this->transactionRepository->getLastTransactionOnDate($asset, Carbon::yesterday());
+
+        return $lastTransactionYesterday !== null && $lastTransactionYesterday->balance > 0;
     }
 
     public function createYieldTransactionFor(Asset $asset)
     {
-        $yieldAmount = $this->calculateYieldFor($asset);
+        $shouldReceiveYield = $this->shouldReceiveYield($asset);
+
+        Log::info("Asset: {$asset->id}, ShouldReceiveYield: " . ($shouldReceiveYield ? 'yes' : 'no'));
+
+        if (!$shouldReceiveYield) {
+            return false;
+        }
+
+        $yieldAmount = $this->calculateDailyYieldAmountFor($asset);
 
         $transaction = $this->transactionService->save([
             'asset_id' => $asset->id,
@@ -121,9 +126,9 @@ class AssetService
         return $transaction;
     }
 
-    public function calculateYieldFor(Asset $asset)
+    public function calculateDailyYieldAmountFor(Asset $asset)
     {
-        $lastTransaction = $this->getLastTransactionFor($asset);
+        $lastTransaction = $this->transactionRepository->getLastTransactionOnDate($asset, Carbon::yesterday());
 
         if (!$lastTransaction) {
             return 0.0;  // todo: maybe return null

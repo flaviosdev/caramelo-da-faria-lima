@@ -32,8 +32,6 @@ class CalculateYields extends Command
     protected $description = 'Command description';
 
     public function __construct(
-        private readonly YieldService       $yieldService,
-        private readonly TransactionService $transactionService,
         private readonly AssetService $assetService,
     )
     {
@@ -45,8 +43,6 @@ class CalculateYields extends Command
      */
     public function handle()
     {
-        $yieldPercentages = YieldPercentage::all();
-
         $assets = Asset::all();
 
         foreach ($assets as $asset) {
