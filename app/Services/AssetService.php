@@ -18,7 +18,8 @@ class AssetService
     public function __construct(
         private readonly AssetRepository       $assetRepository,
         private readonly TransactionService    $transactionService,
-        private readonly TransactionRepository $transactionRepository
+        private readonly TransactionRepository $transactionRepository,
+        private readonly YieldService $yieldService,
     ) {}
 
     public function save($asset)
@@ -28,11 +29,14 @@ class AssetService
         $savedAsset = $this->assetRepository->save($asset);
 
         if ($savedAsset->assetType->indexed) {
-            $modifier = YieldPercentageModifier::create([
+            $modifier = YieldPercentageModifier::create([ // todo: the formula must be here, not in index
                 'asset_id' => $savedAsset->id,
                 'yield_index_id' => $asset['yield_index'],
                 'value' => $asset['modifier']
             ]);
+
+            $this->yieldService->calculateIndexedPercentage($savedAsset);
+
         } else {
             $percentage = YieldPercentage::create([
                 'asset_id' => $savedAsset->id,
